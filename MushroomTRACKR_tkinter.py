@@ -276,8 +276,8 @@ Version: 1.0 (Tkinter Edition)
             # Update UI
             self.root.after(0, self.update_status_success)
             
-        except Exception as e:
-            self.root.after(0, lambda: self.update_status_error(str(e)))
+        except Exception as error:
+            self.root.after(0, lambda: self.update_status_error(str(error)))
     
     def update_status_success(self):
         """Update status when loading is complete"""
@@ -338,22 +338,345 @@ Version: 1.0 (Tkinter Edition)
         biodata['stateProvince_cleaned'] = fuzzy_group(biodata['stateProvince'], threshold=95)
         biodata['family_cleaned'] = fuzzy_group(biodata['family'], threshold=85)
         
-        # Map provinces to countries
+        # Map provinces to countries (complete mapping from temp.py)
         province_to_country = {
-            # Add your province to country mappings here
-            'Östergötland': 'Sweden', 'Skåne': 'Sweden', 'Uppsala': 'Sweden',
-            'Västra Götaland': 'Sweden', 'Södermanland': 'Sweden', 'Stockholm': 'Sweden',
-            'Jämtland': 'Sweden', 'British Columbia': 'Canada', 'Ontario': 'Canada',
-            'Quebec': 'Canada', 'Alberta': 'Canada', 'Manitoba': 'Canada',
-            'Nova Scotia': 'Canada', 'California': 'USA', 'Texas': 'USA',
-            'Florida': 'USA', 'New York': 'USA', 'Oregon': 'USA',
-            'Washington': 'USA', 'England': 'UK', 'Scotland': 'UK',
-            'Wales': 'UK', 'Northern Ireland': 'UK', 'Bavaria': 'Germany',
-            'Yunnan': 'China', 'Guangdong': 'China', 'Sichuan': 'China',
-            'Beijing': 'China', 'Shanghai': 'China', 'São Paulo': 'Brazil',
-            'Rio de Janeiro': 'Brazil', 'Western Cape': 'South Africa', 'Kerala': 'India',
-            'Tamil Nadu': 'India', 'Maharashtra': 'India', 'Moscow': 'Russia'
-        }
+            # Sweden
+            'Östergötland': 'Sweden', 'Skåne': 'Sweden', 'Uppsala': 'Sweden', 'Västra Götaland': 'Sweden', 
+            'Södermanland': 'Sweden', 'Stockholm': 'Sweden', 'Jämtland': 'Sweden', 'Göteborg': 'Sweden',
+            'Torne lappmark': 'Sweden', 'Uppland': 'Sweden', 'Halland': 'Sweden', 'Småland': 'Sweden',
+            'Västergötland': 'Sweden', 'Dalsland': 'Sweden', 'Öland': 'Sweden', 'Norrbotten': 'Sweden',
+            'Medelpad': 'Sweden', 'Närke': 'Sweden', 'Lule lappmark': 'Sweden', 'Västmanland': 'Sweden',
+            'Åsele lappmark': 'Sweden', 'Värmland': 'Sweden', 'Dalarna': 'Sweden', 'Gotland': 'Sweden',
+            'Gästrikland': 'Sweden', 'Ångermanland': 'Sweden', 'Blekinge': 'Sweden', 'Bohuslän': 'Sweden',
+            'Hälsingland': 'Sweden', 'Härjedalen': 'Sweden', 'Lappland': 'Sweden', 'Pite lappmark': 'Sweden',
+            'Västerbotten': 'Sweden',
+
+            # Finland
+            'Pohjois-Savo': 'Finland', 'Etelä-Häme': 'Finland', 'Pohjois-Karjala': 'Finland',
+            'Pohjois-Häme': 'Finland', 'Perä-Pohjanmaa': 'Finland', 'Enontekiön Lappi': 'Finland',
+            'Varsinais-Suomi': 'Finland', 'Uusimaa': 'Finland', 'Kittilän Lappi': 'Finland',
+            'Satakunta': 'Finland', 'Kainuu': 'Finland', 'Sompion Lappi': 'Finland', 'Oulun Pohjanmaa': 'Finland',
+            'Koillismaa': 'Finland', 'Keski-Pohjanmaa': 'Finland', 'Etelä-Karjala': 'Finland',
+            'Etelä-Savo': 'Finland', 'Etelä-Pohjanmaa': 'Finland', 'Åland (Ahvenanmaa)': 'Finland',
+            'Inarin Lappi': 'Finland', 'Tartumaa': 'Finland', 'Läänemaa': 'Finland',
+
+            # Norway
+            'Østfold': 'Norway', 'Hedmark': 'Norway', 'Oppland': 'Norway', 'Nordland': 'Norway',
+            'Sogn og Fjordane': 'Norway', 'Finnmark': 'Norway', 'Vestfold': 'Norway', 'Troms': 'Norway',
+            'Buskerud': 'Norway', 'Telemark': 'Norway', 'Akershus/Oslo': 'Norway', 'Sør-Trøndelag': 'Norway',
+            'Nord-Trøndelag': 'Norway', 'Møre og Romsdal': 'Norway', 'Lycksele lappmark': 'Norway',
+            'Svalbard': 'Norway', 'Bjørnøya': 'Norway', 'Aust-Agder': 'Norway', 'Vest-Agder': 'Norway',
+            'Rogaland': 'Norway', 'Hordaland': 'Norway',
+
+            # Denmark
+            'Fyn/Langeland': 'Denmark', 'Sydjylland': 'Denmark', 'Sjælland': 'Denmark',
+            'Nordjylland': 'Denmark', 'Bornholm': 'Denmark', 'Jylland': 'Denmark', 'Lolland/Falster/Møn': 'Denmark',
+            'Østjylland': 'Denmark', 'Vestjylland': 'Denmark',
+
+            # Iceland
+            'Austur-Island': 'Iceland', 'Nordur-Island': 'Iceland', 'Sudur-Island': 'Iceland', 
+            'Vestur-Island': 'Iceland', 'Nordvestur-Island': 'Iceland',
+
+            # Estonia
+            'Pärnumaa': 'Estonia', 'Harjumaa': 'Estonia', 'Valgamaa': 'Estonia', 'Saaremaa': 'Estonia',
+            'Järvamaa': 'Estonia', 'Viljandimaa': 'Estonia', 'Lääne-Virumaa': 'Estonia', 'Ida-Virumaa': 'Estonia',
+            'Jõgevamaa': 'Estonia', 'Põlvamaa': 'Estonia', 'Võrumaa': 'Estonia', 'Raplamaa': 'Estonia',
+
+            # Latvia
+            'Riga': 'Latvia',
+
+            # Lithuania
+            'Vilnius': 'Lithuania',
+
+            # Germany
+            'Bayern': 'Germany', 'Sachsen-Anhalt': 'Germany', 'Rheinland-Pfalz': 'Germany',
+            'Nordrhein-Westfalen': 'Germany', 'Baden-Württemberg': 'Germany', 'Schleswig-Holstein': 'Germany',
+            'Hamburg': 'Germany', 'Thüringen': 'Germany', 'Niedersachsen': 'Germany', 'Saarland': 'Germany',
+            'Mecklenburg-Vorpommern': 'Germany', 'Bremen': 'Germany', 'Berlin': 'Germany', 'Brandenburg': 'Germany',
+            'Sachsen': 'Germany', 'Hesse': 'Germany', 'Hesse': 'Germany', 'North Rhine-Westphalia': 'Germany',
+            'Bavaria': 'Germany',
+
+            # France
+            'Guadeloupe': 'France', 'île-de-France': 'France', 'Rhône-Alpes': 'France', 'Franche-Comté': 'France',
+            'Picardie': 'France', 'Auvergne': 'France', 'Réunion': 'France', 'Sud-Ouest': 'France',
+            'Midi-Pyrénées': 'France', 'Corse': 'France', 'Alsace': 'France', 'Pays-de-la-Loire': 'France',
+            'Lorraine': 'France', 'Haute-Normandie': 'France', 'Bourgogne': 'France', 'Limousin': 'France',
+            'Aquitaine': 'France', 'Champagne-Ardenne': 'France', 'Basse-Normandie': 'France',
+            'Nord-Pas-de-Calais': 'France', 'Martinique': 'France', 'French Polynesia': 'France',
+            'Saint Barthélémy': 'France', 'Bretagne': 'France', 'Provence-Alpes-Côte d’Azur': 'France',
+            'Centre': 'France', 'Sud': 'France', 'Languedoc-Roussillon': 'France', 'Jura': 'France',
+            'Corsica': 'France', 'Île-de-France': 'France', 'Normandie': 'France', 'Poitou-Charentes': 'France',
+
+            # Switzerland
+            'Graubünden': 'Switzerland', 'Eastern Switzerland': 'Switzerland', 'Bern': 'Switzerland', 
+            'Neuchâtel': 'Switzerland', 'Schwyz': 'Switzerland', 'Zürich': 'Switzerland', 'Thurgau': 'Switzerland',
+            'Luzern': 'Switzerland', 'Solothurn': 'Switzerland', 'Appenzell Ausserrhoden': 'Switzerland',
+            'Aargau': 'Switzerland', 'Basel-Stadt': 'Switzerland', 'Basel-Landschaft': 'Switzerland',
+            'Obwalden': 'Switzerland', 'Nidwalden': 'Switzerland', 'Uri': 'Switzerland', 'Zug': 'Switzerland',
+            'Ticino': 'Switzerland', 'Vaud': 'Switzerland', 'Valais': 'Switzerland', 'Sankt Gallen': 'Switzerland',
+            'Schaffhausen': 'Switzerland', 'Genève': 'Switzerland', 'Glarus': 'Switzerland', 'Fribourg': 'Switzerland',
+
+            # Austria
+            'Salzburg': 'Austria', 'Niederösterreich': 'Austria', 'Vorarlberg': 'Austria', 'Burgenland': 'Austria',
+            'Oberösterreich': 'Austria', 'Tirol': 'Austria', 'Wien': 'Austria', 'Steiermark': 'Austria',
+            'Kärnten': 'Austria',
+
+            # UK
+            'England': 'United Kingdom', 'Scotland': 'United Kingdom', 'Wales': 'United Kingdom',
+            'Northern Ireland': 'United Kingdom', 'Channel Islands': 'United Kingdom',
+
+            # Canada
+            'Ontario': 'Canada', 'Quebec': 'Canada', 'British Columbia': 'Canada', 'Alberta': 'Canada',
+            'Manitoba': 'Canada', 'Nova Scotia': 'Canada', 'Saskatchewan': 'Canada', 'New Brunswick': 'Canada',
+            'Prince Edward Island': 'Canada', 'Newfoundland and Labrador': 'Canada', 'Yukon Territory': 'Canada',
+            'Nunavut': 'Canada', 'Québec': 'Canada', 'Northwest Territories': 'Canada', 'Mid-Island': 'Canada',
+
+            # USA
+            'Wyoming': 'USA', 'Florida': 'USA', 'California': 'USA', 'Texas': 'USA', 'Oregon': 'USA',
+            'Washington': 'USA', 'Illinois': 'USA', 'Massachusetts': 'USA', 'Colorado': 'USA', 'New York': 'USA',
+            'Arizona': 'USA', 'Nevada': 'USA', 'Minnesota': 'USA', 'Indiana': 'USA', 'New Mexico': 'USA',
+            'District of Columbia': 'USA', 'Alaska': 'USA', 'Hawaii': 'USA', 'Rhode Island': 'USA',
+            'Connecticut': 'USA', 'Delaware': 'USA', 'Oklahoma': 'USA', 'Georgia': 'USA', 'Virginia': 'USA',
+            'South Dakota': 'USA', 'West Virginia': 'USA', 'Wisconsin': 'USA', 'Arkansas': 'USA', 'Kentucky': 'USA',
+            'Molokai': 'USA', 'Saint Croix': 'USA', 'Guam - Marianas': 'USA', 'Maine': 'USA', 'North Dakota': 'USA',
+            'Nebraska': 'USA', 'Michigan': 'USA', 'Louisiana': 'USA', 'Maryland': 'USA', 'Montana': 'USA',
+            'Utah': 'USA', 'Mississippi': 'USA', 'Iowa': 'USA', 'South Carolina': 'USA', 'Oahu': 'USA',
+            'Lanai': 'USA', 'Kansas': 'USA', 'New Hampshire': 'USA', 'New Jersey': 'USA', 'Virgin Islands': 'USA',
+            'Alabama': 'USA', 'Tennessee': 'USA', 'Missouri': 'USA', 'Pennsylvania': 'USA', 'North Carolina': 'USA',
+            'Vermont': 'USA', 'Idaho': 'USA', 'Ohio': 'USA', 'New Mexico': 'USA', 'South Carolina': 'USA',
+            'North Dakota': 'USA', 'South Dakota': 'USA', 'West Virginia': 'USA', 'Wisconsin': 'USA',
+            'Arkansas': 'USA', 'Kentucky': 'USA', 'Mississippi': 'USA', 'Iowa': 'USA', 'Connecticut': 'USA',
+            'Rhode Island': 'USA', 'Delaware': 'USA', 'Oklahoma': 'USA', 'Georgia': 'USA', 'Virginia': 'USA',
+            'Alaska': 'USA', 'Hawaii': 'USA', 'Guam - Marianas': 'USA', 'Saint Croix': 'USA', 'Molokai': 'USA',
+            'Lanai': 'USA', 'Oahu': 'USA', 'Virgin Islands': 'USA', 'New Jersey': 'USA', 'New Hampshire': 'USA',
+            'Kansas': 'USA', 'Maine': 'USA', 'Nebraska': 'USA', 'Michigan': 'USA', 'Louisiana': 'USA',
+            'Maryland': 'USA', 'Montana': 'USA', 'Utah': 'USA', 'Arizona': 'USA', 'Nevada': 'USA',
+            'Colorado': 'USA', 'Illinois': 'USA', 'Massachusetts': 'USA', 'Oregon': 'USA', 'Washington': 'USA',
+            'Texas': 'USA', 'Florida': 'USA', 'California': 'USA', 'New York': 'USA', 'Minnesota': 'USA',
+            'Indiana': 'USA',
+
+            # Brazil
+            'Rio de Janeiro': 'Brazil', 'São Tomé': 'Brazil', 'Santa Catarina': 'Brazil', 'Amazonas': 'Brazil',
+            'Goiás': 'Brazil', 'Pará': 'Brazil', 'Tocantins': 'Brazil', 'Amapá': 'Brazil', 'Roraima': 'Brazil',
+            'Rondônia': 'Brazil', 'Alagoas': 'Brazil', 'Pernambuco': 'Brazil', 'Sergipe': 'Brazil',
+            'Espírito Santo': 'Brazil', 'Mato Grosso do Sul': 'Brazil', 'Brasília Distrito Federal': 'Brazil',
+            'Rio Grande do Sul': 'Brazil', 'Mato Grosso': 'Brazil', 'São Paulo': 'Brazil', 'Bahia': 'Brazil',
+            'Piauí': 'Brazil', 'Acre': 'Brazil', 'Ceará': 'Brazil', 'Rio Grande do Norte': 'Brazil',
+            'Paraná': 'Brazil', 'Minas Gerais': 'Brazil',
+
+            # Mexico
+            'Distrito Federal': 'Mexico', 'México (incl. Distrito Federal)': 'Mexico', 'Jalisco': 'Mexico',
+            'Sonora': 'Mexico', 'Hidalgo': 'Mexico', 'Morelos': 'Mexico', 'Chihuahua': 'Mexico',
+            'Durango': 'Mexico', 'Nuevo Leon': 'Mexico', 'Coahuila de Zaragoza': 'Mexico', 'Puebla': 'Mexico',
+            'San Luis Potosi': 'Mexico', 'Tamaulipas': 'Mexico', 'Veracruz-Llave': 'Mexico', 'Yucatan': 'Mexico',
+            'Zacatecas': 'Mexico', 'Colima': 'Mexico', 'Aguascalientes': 'Mexico', 'Guanajuato': 'Mexico',
+            'Michoacan de Ocampo': 'Mexico', 'Nayarit': 'Mexico', 'Oaxaca': 'Mexico', 'Quintana Roo': 'Mexico',
+            'Sinaloa': 'Mexico', 'Baja California': 'Mexico', 'Baja California Sur': 'Mexico', 'Campeche': 'Mexico',
+            'Tabasco': 'Mexico', 'Tlaxcala': 'Mexico', 'Querétaro': 'Mexico', 'Chiapas': 'Mexico',
+            'Yucatán': 'Mexico', 'Jalisco': 'Mexico', 'Oaxaca': 'Mexico',
+
+            # Argentina
+            'Jujuy': 'Argentina', 'Buenos Aires': 'Argentina', 'Entre Ríos': 'Argentina', 'Corrientes': 'Argentina',
+            'Tucumán': 'Argentina', 'Salta': 'Argentina', 'Santa Fe': 'Argentina', 'Chubut': 'Argentina',
+            'Neuquén': 'Argentina', 'Formosa': 'Argentina', 'Catamarca': 'Argentina', 'La Rioja': 'Argentina',
+            'Misiones': 'Argentina', 'Santiago del Estero': 'Argentina', 'San Luis': 'Argentina',
+            'Córdoba': 'Argentina', 'Rio Negro': 'Argentina', 'La Pampa': 'Argentina',
+
+            # Chile
+            'Isla Robinson Crusoe (Más a Tierra)': 'Chile', 'Valparaíso': 'Chile', 'Magallanes (excl. Antarctica Chilena)': 'Chile',
+            'Bío-Bío': 'Chile', 'Araucania': 'Chile', 'Coquimbo': 'Chile', 'Los Lagos': 'Chile', 'Maule': 'Chile',
+            'O’Higgins': 'Chile', 'Santiago, Region Metropolitana': 'Chile', 'Tarapacá': 'Chile', 'Antofagasta': 'Chile',
+            'Atacama': 'Chile', 'Aisén del General Carlos Ibanez del Campo': 'Chile', 'Arica y Parinacota': 'Chile',
+            'Easter Island': 'Chile', 'Isla Alejandro Selkirk (Más Afuera)': 'Chile', 'Los Rios': 'Chile',
+            'Concepción': 'Chile',
+
+            # Spain
+            'Galicia': 'Spain', 'Castilla y León': 'Spain', 'Cataluña': 'Spain', 'Madrid': 'Spain',
+            'Andalucia': 'Spain', 'Asturias': 'Spain', 'Cantabria': 'Spain', 'Navarra': 'Spain', 'Aragón': 'Spain',
+            'Castilla-La Mancha': 'Spain', 'Comunidad Valenciana': 'Spain', 'Extremadura': 'Spain', 'Murcia': 'Spain',
+            'La Rioja': 'Spain', 'Pais Vasco': 'Spain', 'Baleares': 'Spain', 'Tenerife': 'Spain',
+            'Gran Canaria': 'Spain', 'La Palma': 'Spain', 'Isla de la Juventud': 'Cuba', 'Isla Alejandro Selkirk (Más Afuera)': 'Chile',
+
+            # Poland
+            'Opolskie': 'Poland', 'Lubuskie': 'Poland', 'Dolnoslaskie': 'Poland', 'Malopolskie': 'Poland',
+            'Mazowieckie': 'Poland', 'Podlaskie': 'Poland', 'Pomorskie': 'Poland', 'Slaskie': 'Poland',
+            'Swietokrzyskie': 'Poland', 'Warminsko-Mazurskie': 'Poland', 'Wielkopolskie': 'Poland',
+            'Zachodniopomorskie': 'Poland', 'Kujawsko-Pomorskie': 'Poland', 'Lubelskie': 'Poland',
+            'Lodzkie': 'Poland', 'Podkarpackie': 'Poland',
+
+            # Czech Republic
+            'Ustecky kraj': 'Czech Republic', 'Olomoucky kraj': 'Czech Republic', 'Jihocesky kraj': 'Czech Republic',
+            'Jihomoravsky kraj': 'Czech Republic', 'Stredocesky kraj': 'Czech Republic', 'Karlovarsky kraj': 'Czech Republic',
+            'Pardubicky kraj': 'Czech Republic', 'Plzensky kraj': 'Czech Republic', 'Moravskoslezsky kraj': 'Czech Republic',
+            'Liberecky kraj': 'Czech Republic', 'Zlinsky kraj': 'Czech Republic', 'Královéhradecky kraj': 'Czech Republic',
+            'Vysocina': 'Czech Republic', 'Praha': 'Czech Republic',
+
+            # Hungary
+            'Pest (incl. Budapest)': 'Hungary', 'Bács-Kiskun': 'Hungary', 'Tolna': 'Hungary', 'Györ-Moson-Sopron': 'Hungary',
+            'Jász-Nagykun-Szolnok': 'Hungary', 'Szabolcs-Szatmár-Bereg': 'Hungary', 'Baranya': 'Hungary',
+            'Fejér': 'Hungary', 'Veszprém': 'Hungary', 'Vas': 'Hungary', 'Komárom-Esztergom': 'Hungary',
+            'Heves': 'Hungary', 'Nógrád': 'Hungary', 'Békés': 'Hungary', 'Csongrád': 'Hungary',
+            'Somogy': 'Hungary', 'Zala': 'Hungary', 'Borsod-Abaúj-Zemplén': 'Hungary', 'Hajdú-Bihar': 'Hungary',
+
+            # Slovakia
+            'Banskobystricky kraj': 'Slovakia', 'Presovsky kraj': 'Slovakia', 'Bratislavsky kraj': 'Slovakia',
+            'Trenciansky kraj': 'Slovakia', 'Trnavsky kraj': 'Slovakia', 'Nitriansky kraj': 'Slovakia',
+            'Kosicky kraj': 'Slovakia',
+
+            # Belarus
+            'Magilev': 'Belarus', 'Brest': 'Belarus', 'Grodna': 'Belarus', 'Minsk': 'Belarus',
+
+            # Armenia
+            'Yerevan': 'Armenia', 'Kotayk': 'Armenia',
+
+            # Georgia
+            'Tbilisi': 'Georgia', 'Ajaria': 'Georgia', 'Kakheti': 'Georgia', 'Imereti': 'Georgia',
+            'Samtskhe-Javakheti': 'Georgia', 'Kvemo Kartli': 'Georgia', 'Samegrelo-Zemo Svaneti': 'Georgia',
+            'Mtskheta-Mtianeti': 'Georgia', 'Shida Kartli': 'Georgia',
+
+            # Cyprus
+            'Lemesos - Limassol': 'Cyprus', 'Nicosia - Lefkosia - Lefkosa': 'Cyprus', 'Paphos - Pafos - Baf': 'Cyprus',
+            'Larnaca - Larnaka': 'Cyprus', 'Famagusta - Gazimagusa - Ammochostos': 'Cyprus',
+            'Kyrenia - Girne - Keryneia': 'Cyprus',
+
+            # Israel
+            'Tel Aviv': 'Israel', 'Jerusalem': 'Israel', 'Haifa': 'Israel', 'Northern': 'Israel',
+            'Central': 'Israel', 'Southern': 'Israel',
+
+            # Morocco
+            'Tunis': 'Morocco', 'Setif': 'Morocco', 'Chefchaouen': 'Morocco', 'Azilal': 'Morocco',
+            'Al Haouz': 'Morocco', 'Agadir Ida-Outanane': 'Morocco', 'Marrakech': 'Morocco',
+            'Meknès': 'Morocco', 'Rabat': 'Morocco', 'Boulmane': 'Morocco',
+
+            # Tunisia
+            'Tunis': 'Tunisia', 'Sousse': 'Tunisia', 'Siliana': 'Tunisia', 'Kasserine': 'Tunisia',
+            'Ben Arous': 'Tunisia', 'Jendouba': 'Tunisia', 'Nabeul': 'Tunisia', 'Kef': 'Tunisia',
+
+            # Egypt
+            'Al Qalyubiyah': 'Egypt', 'Al Qahirah': 'Egypt', 'Al Buhayrah': 'Egypt', 'Al Iskandariyah': 'Egypt',
+            'Al Isma’iliyah': 'Egypt', 'Al Jizah': 'Egypt', 'Aswan': 'Egypt', 'Asyut': 'Egypt',
+            'Dumyat': 'Egypt', 'Janub Sina’': 'Egypt', 'Al Uqsur': 'Egypt', 'Faiyum': 'Egypt',
+
+            # Jordan
+            'Amman': 'Jordan',
+
+            # Lebanon
+            'Beirut': 'Lebanon',
+
+            # Syria
+            'As Suwayda': 'Syria', 'Latakia': 'Syria', 'Aleppo': 'Syria', 'Idlib': 'Syria',
+            'Dara': 'Syria', 'Homs': 'Syria', 'Rif Dimashq': 'Syria',
+
+            # Pakistan
+            'Islamabad Capital Territory': 'Pakistan', 'Sindh': 'Pakistan', 'Balochistan': 'Pakistan',
+            'North-West Frontier Province': 'Pakistan',
+
+            # Bangladesh
+            'Dhaka': 'Bangladesh', 'Sylhet': 'Bangladesh', 'Chittagong': 'Bangladesh', 'Rajshahi': 'Bangladesh',
+
+            # Thailand
+            'Chiang Rai': 'Thailand', 'Chaiyaphum': 'Thailand', 'Uttaradit': 'Thailand', 'Khon Kaen': 'Thailand',
+            'Suphan Buri': 'Thailand', 'Krung Thep (Bangkok)': 'Thailand',
+
+            # Laos
+            'Champasak': 'Laos',
+
+            # Vietnam
+            'Ha Noi': 'Vietnam', 'Ho Chi Minh': 'Vietnam', 'Thanh Hoa': 'Vietnam',
+
+            # Mozambique
+            'Tete': 'Mozambique', 'Maputo (provincia)': 'Mozambique', 'Zambézia': 'Mozambique', 'Nampula': 'Mozambique',
+
+            # Namibia
+            'Erongo': 'Namibia', 'Otjozondjupa': 'Namibia', 'Khomas': 'Namibia', 'Karas': 'Namibia',
+
+            # Botswana
+            'Gaborone': 'Botswana',
+
+            # Ghana
+            'Volta': 'Ghana', 'Brong Ahafo': 'Ghana', 'Ashanti': 'Ghana', 'Central': 'Ghana',
+            'Eastern': 'Ghana', 'Greater Accra': 'Ghana', 'Northern': 'Ghana', 'Western': 'Ghana',
+
+            # Nigeria
+            'Lagos': 'Nigeria',
+
+            # Senegal
+            'Dakar': 'Senegal',
+
+            # Cameroon
+            'Est': 'Cameroon', 'Littoral': 'Cameroon', 'Sud': 'Cameroon',
+
+            # Gabon
+            'Estuaire': 'Gabon',
+
+            # Democratic Republic of the Congo
+            'Bas-Congo': 'Democratic Republic of the Congo', 'Bandundu': 'Democratic Republic of the Congo',
+            'Katanga': 'Democratic Republic of the Congo', 'Kinshasa': 'Democratic Republic of the Congo',
+            'Orientale': 'Democratic Republic of the Congo', 'Equateur': 'Democratic Republic of the Congo',
+            'Maniema': 'Democratic Republic of the Congo', 'Nord-Kivu': 'Democratic Republic of the Congo',
+
+            # Angola
+            'Luanda': 'Angola',
+
+            # South Sudan
+            'Juba': 'South Sudan',
+
+            # Sudan
+            'Khartoum': 'Sudan',
+
+            # Madagascar
+            'Mahajanga': 'Madagascar', 'Antananarivo': 'Madagascar', 'Toamasina': 'Madagascar',
+            'Fianarantsoa': 'Madagascar', 'Toliara': 'Madagascar', 'Antsiranana': 'Madagascar',
+
+            # India
+            'Delhi': 'India', 'Goa': 'India', 'Kerala': 'India', 'Tamil Nadu': 'India', 'Maharashtra': 'India',
+            'West Bengal': 'India', 'Assam': 'India', 'Jharkhand': 'India', 'Uttar Pradesh': 'India',
+            'Himachal Pradesh': 'India', 'Karnataka': 'India', 'Andhra Pradesh': 'India', 'Madhya Pradesh': 'India',
+            'Punjab': 'India', 'Bihar': 'India', 'Manipur': 'India', 'Sikkim': 'India',
+            'Uttarakhand (Uttaranchal)': 'India', 'Meghalaya': 'India', 'Orissa': 'India', 'Rajasthan': 'India',
+            'Gujarat': 'India', 'Kochi': 'India',
+
+            # China
+            'Hainan': 'China', 'Guangdong': 'China', 'Guangxi Zhuang': 'China', 'Yunnan': 'China',
+            'Sichuan': 'China', 'Beijing': 'China', 'Shanghai': 'China', 'Jiangxi': 'China', 'Jiangsu': 'China',
+            'Liaoning': 'China', 'Jilin': 'China', 'Heilongjiang': 'China', 'Hebei': 'China', 'Shandong': 'China',
+            'Anhui': 'China', 'Hubei': 'China', 'Hunan': 'China', 'Fujian': 'China', 'Zhejiang': 'China',
+            'Henan': 'China', 'Xinjiang Uygur': 'China', 'Neimenggu (Inner Mongolia)': 'China', 'Tibet': 'China',
+            'Xizang (Tibet)': 'China', 'Aomen (Macau)': 'China', 'Xianggang (Hongkong)': 'China', 'Qinghai': 'China',
+            'Shaanxi': 'China', 'Gansu': 'China', 'Guizhou': 'China', 'Shanxi': 'China',
+
+            # Russia
+            'Komi': 'Russia', 'Moskovskaya oblast': 'Russia', 'Amurskaya oblast': 'Russia', 'Irkutskaya oblast': 'Russia',
+            'Rostovskaya oblast': 'Russia', 'Kamchatskiy kray': 'Russia', 'Primorskiy kray': 'Russia',
+            'Arkhangelskaya oblast': 'Russia', 'Chechnya': 'Russia', 'Bashkortostan': 'Russia', 'Altay': 'Russia',
+            'Leningradskaya oblast': 'Russia', 'Krasnoyarskiy kray': 'Russia', 'Volgogradskaya oblast': 'Russia',
+            'Smolenskaya oblast': 'Russia', 'Dagestan': 'Russia', 'Novgorodskaya oblast': 'Russia',
+            'Tyumenskaya oblast': 'Russia', 'Kurskskaya oblast': 'Russia', 'Kirovskaya oblast': 'Russia',
+            'Kaliningradskaya oblast': 'Russia', 'Khabarovsk Krai': 'Russia', 'Karelia': 'Russia',
+            'Sakhalinskaya oblast': 'Russia', 'Tatarstan': 'Russia', 'Udmurtiya': 'Russia', 'Krasnodarskiy kray': 'Russia',
+            'Stavropolskiy kray': 'Russia', 'Vladimirskaya oblast': 'Russia', 'Yamala-Nenetskiy okrug': 'Russia',
+            'Nenetskiy okrug': 'Russia', 'Severnaya Osetiya - Alaniya': 'Russia', 'Ulyanovskaya oblast': 'Russia',
+            'Yaroslavskaya oblast': 'Russia', 'Sverdlovskaya oblast': 'Russia', 'Tambovskaya oblast': 'Russia',
+            'Tomskaya oblast': 'Russia', 'Voronezhskaya oblast': 'Russia', 'Magadanskaya oblast': 'Russia',
+            'Permskiy kray': 'Russia', 'Samarskaya oblast': 'Russia', 'Astrakhanskaya oblast': 'Russia',
+            'Chukotka Autonomous Okrug': 'Russia', 'Chuvashia': 'Russia', 'Kalmykiya': 'Russia', 'Kemerovo Oblast': 'Russia',
+            'Kostroma Oblast': 'Russia', 'Kurganskaya oblast': 'Russia', 'Lipetsk Oblast': 'Russia', 'Mari El': 'Russia',
+            'Mordovia': 'Russia', 'Murmanskaya oblast': 'Russia', 'Orenburgskaya oblast': 'Russia', 'Penza Oblast': 'Russia',
+            'Pskovskaya oblast': 'Russia', 'Ryazanskaya oblast': 'Russia', 'Saratovskaya oblast': 'Russia',
+            'Tula Oblast': 'Russia', 'Tver Oblast': 'Russia', 'Vologda Oblast': 'Russia', 'Yamalo-Nenets Autonomous Okrug': 'Russia',
+            'Orlovskaya oblast': 'Russia', 'Bryanskaya oblast': 'Russia', 'Omskaya oblast': 'Russia',
+            'Kaluzhskaya oblast': 'Russia', 'Astrakhanskaya oblast': 'Russia', 'Sakhalinskaya oblast': 'Russia',
+            'Tomskaya oblast': 'Russia', 'Samarskaya oblast': 'Russia', 'Stavropolskiy kray': 'Russia',
+            'Krasnodarskiy kray': 'Russia', 'Krasnoyarskiy kray': 'Russia', 'Kamchatskiy kray': 'Russia',
+            'Permskiy kray': 'Russia', 'Udmurtiya': 'Russia', 'Tatarstan': 'Russia', 'Kaliningradskaya oblast': 'Russia',
+            'Leningradskaya oblast': 'Russia', 'Smolenskaya oblast': 'Russia', 'Volgogradskaya oblast': 'Russia',
+            'Rostovskaya oblast': 'Russia', 'Irkutskaya oblast': 'Russia', 'Amurskaya oblast': 'Russia',
+            'Nenetskiy okrug': 'Russia', 'Yamala-Nenetskiy okrug': 'Russia', 'Dagestan': 'Russia', 'Chechnya': 'Russia',
+            'Bashkortostan': 'Russia', 'Altay': 'Russia', 'Komi': 'Russia', 'Karelia': 'Russia',
+            'Severnaya Osetiya - Alaniya': 'Russia', 'Ulyanovskaya oblast': 'Russia', 'Yaroslavskaya oblast': 'Russia',
+            'Sverdlovskaya oblast': 'Russia', 'Tambovskaya oblast': 'Russia', 'Voronezhskaya oblast': 'Russia',
+            'Ryazanskaya oblast': 'Russia', 'Saratovskaya oblast': 'Russia', 'Pskovskaya oblast': 'Russia',
+            'Vladimirskaya oblast': 'Russia', 'Vologda Oblast': 'Russia', 'Tula Oblast': 'Russia',
         
         def map_province_to_country(province, mapping):
             province_lower = str(province).lower()
