@@ -1,0 +1,885 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Italic;}
+{\colortbl;\red255\green255\blue255;\red253\green217\blue76;\red28\green26\blue40;\red252\green97\blue211;
+\red173\green173\blue173;\red250\green42\blue63;\red53\green250\blue243;\red255\green255\blue255;\red245\green103\blue95;
+\red252\green118\blue44;\red210\green63\blue6;\red100\green242\blue169;\red113\green118\blue175;}
+{\*\expandedcolortbl;;\cssrgb\c99608\c87059\c36471;\cssrgb\c14902\c13725\c20784;\cssrgb\c100000\c49412\c85882;
+\cssrgb\c73333\c73333\c73333;\cssrgb\c99608\c26667\c31373;\cssrgb\c21176\c97647\c96471;\cssrgb\c100000\c100000\c100000;\cssrgb\c97647\c49412\c44706;
+\cssrgb\c100000\c54510\c22353;\cssrgb\c86667\c33333\c0;\cssrgb\c44706\c94510\c72157;\cssrgb\c51765\c54510\c74118;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 import\cf4 \strokec4  kivy\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.app \cf2 \strokec2 import\cf4 \strokec4  App\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.boxlayout \cf2 \strokec2 import\cf4 \strokec4  BoxLayout\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.tabbedpanel \cf2 \strokec2 import\cf4 \strokec4  TabbedPanel, TabbedPanelItem\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.label \cf2 \strokec2 import\cf4 \strokec4  Label\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.button \cf2 \strokec2 import\cf4 \strokec4  Button\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.textinput \cf2 \strokec2 import\cf4 \strokec4  TextInput\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.spinner \cf2 \strokec2 import\cf4 \strokec4  Spinner\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.progressbar \cf2 \strokec2 import\cf4 \strokec4  ProgressBar\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.filechooser \cf2 \strokec2 import\cf4 \strokec4  FileChooserIconView\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.popup \cf2 \strokec2 import\cf4 \strokec4  Popup\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.scrollview \cf2 \strokec2 import\cf4 \strokec4  ScrollView\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.uix.dropdown \cf2 \strokec2 import\cf4 \strokec4  DropDown\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.properties \cf2 \strokec2 import\cf4 \strokec4  StringProperty, ListProperty, ObjectProperty\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.clock \cf2 \strokec2 import\cf4 \strokec4  Clock\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  kivy.core.window \cf2 \strokec2 import\cf4 \strokec4  Window\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 pandas\cf4 \strokec4  \cf2 \strokec2 as\cf4 \strokec4  \cf6 \strokec6 pd\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 import\cf4 \strokec4  numpy \cf2 \strokec2 as\cf4 \strokec4  \cf6 \strokec6 np\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 os\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 threading\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  rapidfuzz \cf2 \strokec2 import\cf4 \strokec4  process\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  \cf6 \strokec6 sklearn\cf4 \strokec4 .\cf6 \strokec6 preprocessing\cf4 \strokec4  \cf2 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 , \cf6 \strokec6 StandardScaler\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  \cf6 \strokec6 sklearn\cf4 \strokec4 .\cf6 \strokec6 ensemble\cf4 \strokec4  \cf2 \strokec2 import\cf4 \strokec4  \cf6 \strokec6 RandomForestClassifier\cf5 \cb1 \strokec5 \
+\cf2 \cb3 \strokec2 from\cf4 \strokec4  \cf6 \strokec6 sklearn\cf4 \strokec4 .\cf6 \strokec6 metrics\cf4 \strokec4  \cf2 \strokec2 import\cf4 \strokec4  \cf7 \strokec7 accuracy_score\cf4 \strokec4 , \cf7 \strokec7 balanced_accuracy_score\cf5 \cb1 \strokec5 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf4 \cb3 \strokec4 Window.size \cf8 \strokec8 =\cf4 \strokec4  (\cf9 \strokec9 1200\cf4 \strokec4 , \cf9 \strokec9 800\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4 province_coordinates \cf8 \strokec8 =\cf4 \strokec4  \{\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Ostergotland'\cf4 \strokec4 : (\cf9 \strokec9 58.4064\cf4 \strokec4 , \cf9 \strokec9 15.6255\cf4 \strokec4 ), \cf10 \strokec10 'Skane'\cf4 \strokec4 : (\cf9 \strokec9 55.9903\cf4 \strokec4 , \cf9 \strokec9 13.5958\cf4 \strokec4 ), \cf10 \strokec10 'Uppsala'\cf4 \strokec4 : (\cf9 \strokec9 59.8586\cf4 \strokec4 , \cf9 \strokec9 17.6389\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Vastra Gotaland'\cf4 \strokec4 : (\cf9 \strokec9 58.2528\cf4 \strokec4 , \cf9 \strokec9 13.0596\cf4 \strokec4 ), \cf10 \strokec10 'Sodermanland'\cf4 \strokec4 : (\cf9 \strokec9 59.0336\cf4 \strokec4 , \cf9 \strokec9 16.7519\cf4 \strokec4 ), \cf10 \strokec10 'Stockholm'\cf4 \strokec4 : (\cf9 \strokec9 59.3293\cf4 \strokec4 , \cf9 \strokec9 18.0686\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Jamtland'\cf4 \strokec4 : (\cf9 \strokec9 63.1712\cf4 \strokec4 , \cf9 \strokec9 14.9592\cf4 \strokec4 ), \cf10 \strokec10 'British Columbia'\cf4 \strokec4 : (\cf9 \strokec9 53.7267\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 127.6476\cf4 \strokec4 ), \cf10 \strokec10 'Ontario'\cf4 \strokec4 : (\cf9 \strokec9 51.2538\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 85.3232\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Quebec'\cf4 \strokec4 : (\cf9 \strokec9 52.9399\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 73.5491\cf4 \strokec4 ), \cf10 \strokec10 'Alberta'\cf4 \strokec4 : (\cf9 \strokec9 53.9333\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 116.5765\cf4 \strokec4 ), \cf10 \strokec10 'Manitoba'\cf4 \strokec4 : (\cf9 \strokec9 49.8951\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 97.1384\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Nova Scotia'\cf4 \strokec4 : (\cf9 \strokec9 44.6820\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 63.7443\cf4 \strokec4 ), \cf10 \strokec10 'Queensland'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 20.9176\cf4 \strokec4 , \cf9 \strokec9 142.7028\cf4 \strokec4 ), \cf10 \strokec10 'New South Wales'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 33.8688\cf4 \strokec4 , \cf9 \strokec9 151.2093\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Victoria'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 37.4713\cf4 \strokec4 , \cf9 \strokec9 144.7852\cf4 \strokec4 ), \cf10 \strokec10 'Western Australia'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 27.6728\cf4 \strokec4 , \cf9 \strokec9 121.6283\cf4 \strokec4 ), \cf10 \strokec10 'Tasmania'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 42.0351\cf4 \strokec4 , \cf9 \strokec9 146.6367\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'South Australia'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 30.0002\cf4 \strokec4 , \cf9 \strokec9 136.2092\cf4 \strokec4 ), \cf10 \strokec10 'California'\cf4 \strokec4 : (\cf9 \strokec9 36.7783\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 119.4179\cf4 \strokec4 ), \cf10 \strokec10 'Texas'\cf4 \strokec4 : (\cf9 \strokec9 31.9686\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 99.9018\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Florida'\cf4 \strokec4 : (\cf9 \strokec9 27.9944\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 81.7603\cf4 \strokec4 ), \cf10 \strokec10 'New York'\cf4 \strokec4 : (\cf9 \strokec9 43.0000\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 75.0000\cf4 \strokec4 ), \cf10 \strokec10 'Oregon'\cf4 \strokec4 : (\cf9 \strokec9 43.8041\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 120.5542\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Washington'\cf4 \strokec4 : (\cf9 \strokec9 47.7511\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 120.7401\cf4 \strokec4 ), \cf10 \strokec10 'Arizona'\cf4 \strokec4 : (\cf9 \strokec9 34.0489\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 111.0937\cf4 \strokec4 ), \cf10 \strokec10 'Nevada'\cf4 \strokec4 : (\cf9 \strokec9 38.8026\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 116.4194\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Illinois'\cf4 \strokec4 : (\cf9 \strokec9 40.6331\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 89.3985\cf4 \strokec4 ), \cf10 \strokec10 'Massachusetts'\cf4 \strokec4 : (\cf9 \strokec9 42.4072\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 71.3824\cf4 \strokec4 ), \cf10 \strokec10 'Colorado'\cf4 \strokec4 : (\cf9 \strokec9 39.5501\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 105.7821\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'England'\cf4 \strokec4 : (\cf9 \strokec9 52.3555\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 1.1743\cf4 \strokec4 ), \cf10 \strokec10 'Scotland'\cf4 \strokec4 : (\cf9 \strokec9 56.4907\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 4.2026\cf4 \strokec4 ), \cf10 \strokec10 'Wales'\cf4 \strokec4 : (\cf9 \strokec9 52.1307\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 3.7837\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Northern Ireland'\cf4 \strokec4 : (\cf9 \strokec9 54.7877\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 6.4923\cf4 \strokec4 ), \cf10 \strokec10 'Bavaria'\cf4 \strokec4 : (\cf9 \strokec9 48.7904\cf4 \strokec4 , \cf9 \strokec9 11.4979\cf4 \strokec4 ), \cf10 \strokec10 'North Rhine-Westphalia'\cf4 \strokec4 : (\cf9 \strokec9 51.4332\cf4 \strokec4 , \cf9 \strokec9 7.6616\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Hesse'\cf4 \strokec4 : (\cf9 \strokec9 50.6521\cf4 \strokec4 , \cf9 \strokec9 9.1624\cf4 \strokec4 ), \cf10 \strokec10 'Brandenburg'\cf4 \strokec4 : (\cf9 \strokec9 52.4125\cf4 \strokec4 , \cf9 \strokec9 12.5316\cf4 \strokec4 ), \cf10 \strokec10 'Berlin'\cf4 \strokec4 : (\cf9 \strokec9 52.5200\cf4 \strokec4 , \cf9 \strokec9 13.4050\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Yunnan'\cf4 \strokec4 : (\cf9 \strokec9 25.0453\cf4 \strokec4 , \cf9 \strokec9 102.7097\cf4 \strokec4 ), \cf10 \strokec10 'Guangdong'\cf4 \strokec4 : (\cf9 \strokec9 23.3790\cf4 \strokec4 , \cf9 \strokec9 113.7633\cf4 \strokec4 ), \cf10 \strokec10 'Sichuan'\cf4 \strokec4 : (\cf9 \strokec9 30.5728\cf4 \strokec4 , \cf9 \strokec9 104.0668\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Beijing'\cf4 \strokec4 : (\cf9 \strokec9 39.9042\cf4 \strokec4 , \cf9 \strokec9 116.4074\cf4 \strokec4 ), \cf10 \strokec10 'Shanghai'\cf4 \strokec4 : (\cf9 \strokec9 31.2304\cf4 \strokec4 , \cf9 \strokec9 121.4737\cf4 \strokec4 ), \cf10 \strokec10 'Tibet'\cf4 \strokec4 : (\cf9 \strokec9 31.6927\cf4 \strokec4 , \cf9 \strokec9 88.0924\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Sao Paulo'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 23.5505\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 46.6333\cf4 \strokec4 ), \cf10 \strokec10 'Amazonas'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 3.4653\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 62.2159\cf4 \strokec4 ), \cf10 \strokec10 'Parana'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 24.8949\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 51.5500\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Bahia'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 12.5797\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 41.7007\cf4 \strokec4 ), \cf10 \strokec10 'Rio de Janeiro'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 22.9068\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 43.1729\cf4 \strokec4 ), \cf10 \strokec10 'Minas Gerais'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 18.5122\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 44.5550\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Western Cape'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 33.2278\cf4 \strokec4 , \cf9 \strokec9 21.8569\cf4 \strokec4 ), \cf10 \strokec10 'Eastern Cape'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 32.2968\cf4 \strokec4 , \cf9 \strokec9 26.4194\cf4 \strokec4 ), \cf10 \strokec10 'KwaZulu-Natal'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 28.5306\cf4 \strokec4 , \cf9 \strokec9 30.8958\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Gauteng'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 26.2708\cf4 \strokec4 , \cf9 \strokec9 28.1123\cf4 \strokec4 ), \cf10 \strokec10 'Chiapas'\cf4 \strokec4 : (\cf9 \strokec9 16.7569\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 93.1292\cf4 \strokec4 ), \cf10 \strokec10 'Jalisco'\cf4 \strokec4 : (\cf9 \strokec9 20.6597\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 103.3496\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Yucatan'\cf4 \strokec4 : (\cf9 \strokec9 20.7099\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 89.0943\cf4 \strokec4 ), \cf10 \strokec10 'Oaxaca'\cf4 \strokec4 : (\cf9 \strokec9 17.0732\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 96.7266\cf4 \strokec4 ), \cf10 \strokec10 'Kerala'\cf4 \strokec4 : (\cf9 \strokec9 10.8505\cf4 \strokec4 , \cf9 \strokec9 76.2711\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Tamil Nadu'\cf4 \strokec4 : (\cf9 \strokec9 11.1271\cf4 \strokec4 , \cf9 \strokec9 78.6569\cf4 \strokec4 ), \cf10 \strokec10 'Maharashtra'\cf4 \strokec4 : (\cf9 \strokec9 19.7515\cf4 \strokec4 , \cf9 \strokec9 75.7139\cf4 \strokec4 ), \cf10 \strokec10 'West Bengal'\cf4 \strokec4 : (\cf9 \strokec9 22.9868\cf4 \strokec4 , \cf9 \strokec9 87.8550\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Assam'\cf4 \strokec4 : (\cf9 \strokec9 26.2006\cf4 \strokec4 , \cf9 \strokec9 92.9376\cf4 \strokec4 ), \cf10 \strokec10 'Moscow'\cf4 \strokec4 : (\cf9 \strokec9 55.7558\cf4 \strokec4 , \cf9 \strokec9 37.6173\cf4 \strokec4 ), \cf10 \strokec10 'Siberia'\cf4 \strokec4 : (\cf9 \strokec9 61.0137\cf4 \strokec4 , \cf9 \strokec9 99.1967\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Primorsky Krai'\cf4 \strokec4 : (\cf9 \strokec9 45.0525\cf4 \strokec4 , \cf9 \strokec9 135.0000\cf4 \strokec4 ), \cf10 \strokec10 'Java'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 7.4910\cf4 \strokec4 , \cf9 \strokec9 110.0044\cf4 \strokec4 ), \cf10 \strokec10 'Bali'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 8.3405\cf4 \strokec4 , \cf9 \strokec9 115.0920\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Sumatra'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 0.5897\cf4 \strokec4 , \cf9 \strokec9 101.3431\cf4 \strokec4 ), \cf10 \strokec10 'Luzon'\cf4 \strokec4 : (\cf9 \strokec9 16.5000\cf4 \strokec4 , \cf9 \strokec9 121.0000\cf4 \strokec4 ), \cf10 \strokec10 'Mindanao'\cf4 \strokec4 : (\cf9 \strokec9 8.0000\cf4 \strokec4 , \cf9 \strokec9 125.0000\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Visayas'\cf4 \strokec4 : (\cf9 \strokec9 11.5000\cf4 \strokec4 , \cf9 \strokec9 123.5000\cf4 \strokec4 ), \cf10 \strokec10 'Buenos Aires'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 34.6037\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 58.3816\cf4 \strokec4 ), \cf10 \strokec10 'Santa Fe'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 31.5855\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 60.7238\cf4 \strokec4 ),\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 'Cordoba'\cf4 \strokec4 : (\cf2 \strokec2 -\cf9 \strokec9 31.4201\cf4 \strokec4 , \cf2 \strokec2 -\cf9 \strokec9 64.1888\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4 \}\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4 non_macroscopic_basidiomycota_genera \cf8 \strokec8 =\cf4 \strokec4  [\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Ustilago"\cf4 \strokec4 , \cf10 \strokec10 "Tilletia"\cf4 \strokec4 , \cf10 \strokec10 "Urocystis"\cf4 \strokec4 , \cf10 \strokec10 "Sporobolomyces"\cf4 \strokec4 , \cf10 \strokec10 "Cryptococcus"\cf4 \strokec4 , \cf10 \strokec10 "Rhodotorula"\cf4 \strokec4 , \cf10 \strokec10 "Cystofilobasidium"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Sporidiobolus"\cf4 \strokec4 , \cf10 \strokec10 "Erythrobasidium"\cf4 \strokec4 , \cf10 \strokec10 "Microbotryum"\cf4 \strokec4 , \cf10 \strokec10 "Exobasidium"\cf4 \strokec4 , \cf10 \strokec10 "Entyloma"\cf4 \strokec4 , \cf10 \strokec10 "Graphiola"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Puccinia"\cf4 \strokec4 , \cf10 \strokec10 "Melampsora"\cf4 \strokec4 , \cf10 \strokec10 "Coleosporium"\cf4 \strokec4 , \cf10 \strokec10 "Chrysomyxa"\cf4 \strokec4 , \cf10 \strokec10 "Cronartium"\cf4 \strokec4 , \cf10 \strokec10 "Phakopsora"\cf4 \strokec4 , \cf10 \strokec10 "Septobasidium"\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4 ]\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4 non_macroscopic_basidiomycota_families \cf8 \strokec8 =\cf4 \strokec4  [\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Ustilaginaceae"\cf4 \strokec4 , \cf10 \strokec10 "Ustilaginomycetaceae"\cf4 \strokec4 , \cf10 \strokec10 "Urocystidaceae"\cf4 \strokec4 , \cf10 \strokec10 "Tilletiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Tilletiopsidaceae"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Cryptococcaceae"\cf4 \strokec4 , \cf10 \strokec10 "Filobasidiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Cystofilobasidiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Sporidiobolaceae"\cf4 \strokec4 , \cf10 \strokec10 "Sporobolomycetaceae"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Erythrobasidiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Microbotryaceae"\cf4 \strokec4 , \cf10 \strokec10 "Exobasidiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Entylomataceae"\cf4 \strokec4 , \cf10 \strokec10 "Graphiolaceae"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Pucciniaceae"\cf4 \strokec4 , \cf10 \strokec10 "Melampsoraceae"\cf4 \strokec4 , \cf10 \strokec10 "Coleosporiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Chrysomyxa"\cf4 \strokec4 , \cf10 \strokec10 "Cronartiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Phakopsoraceae"\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     \cf10 \strokec10 "Phyllachoraceae"\cf4 \strokec4 , \cf10 \strokec10 "Septobasidiaceae"\cf4 \strokec4 , \cf10 \strokec10 "Auriculariaceae"\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4 ]\cf5 \cb1 \strokec5 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 class\cf4 \strokec4  \cf6 \strokec6 MushroomTRACKRRoot\cf4 \strokec4 (\cf11 \strokec11 BoxLayout\cf4 \strokec4 ):\cf5 \cb1 \strokec5 \
+\pard\pardeftab720\partightenfactor0
+\cf4 \cb3 \strokec4     status_text \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 StringProperty\cf4 \strokec4 (\cf10 \strokec10 "Loading data..."\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     progress \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     biodata \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     tempdata \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     available_countries \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ListProperty\cf4 \strokec4 ([])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     available_provinces \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ListProperty\cf4 \strokec4 ([])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     available_families \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ListProperty\cf4 \strokec4 ([])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     final_model \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     scaler \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     features \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ListProperty\cf4 \strokec4 ([])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     global_mean_temp \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     biodata_top \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     bal_acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     le_stateProvince \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     le_family \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     le_country \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4     le_genus \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ObjectProperty\cf4 \strokec4 (\cf9 \strokec9 None\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 __init__\cf4 \strokec4 (
+\f1\i self
+\f0\i0 , \cf2 \strokec2 **
+\f1\i \cf4 \strokec4 kwargs
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf6 \strokec6 super\cf4 \strokec4 ().\cf7 \strokec7 __init__\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 orientation
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'vertical'\cf4 \strokec4 , \cf2 \strokec2 **
+\f1\i \cf4 \strokec4 kwargs
+\f0\i0 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .tab_panel \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TabbedPanel\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 do_default_tab
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 False\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .tab_panel)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .\cf7 \strokec7 build_tabs\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 : \cf6 \strokec6 threading\cf4 \strokec4 .\cf6 \strokec6 Thread\cf4 \strokec4 (
+\f1\i target
+\f0\i0 \cf8 \strokec8 =
+\f1\i \cf4 \strokec4 self
+\f0\i0 .\cf7 \strokec7 load_data\cf4 \strokec4 ).\cf7 \strokec7 start\cf4 \strokec4 (), \cf9 \strokec9 0.1\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 build_tabs\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i \cf13 \strokec13 # Data Tab
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_tab \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TabbedPanelItem\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'Data'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 BoxLayout\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 orientation
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'vertical'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_status \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Label\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =
+\f1\i \cf4 \strokec4 self
+\f0\i0 .status_text, 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 30\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_progress \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 ProgressBar\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 max
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 1\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 value
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_textbox \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TextInput\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 readonly
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 True\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 multiline
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 True\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 font_size
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 14\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .refresh_data_btn \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Button\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Refresh Data"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 on_release
+\f0\i0 \cf8 \strokec8 =\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i x
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 refresh_data\cf4 \strokec4 ())\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .export_data_btn \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Button\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Export Data"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 on_release
+\f0\i0 \cf8 \strokec8 =\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i x
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 export_data\cf4 \strokec4 ())\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .data_status)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .data_progress)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .refresh_data_btn)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .export_data_btn)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         data_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .data_textbox)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_tab.\cf7 \strokec7 add_widget\cf4 \strokec4 (data_layout)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .tab_panel.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .data_tab)\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4         
+\f1\i \cf13 \strokec13 # Predict Tab
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .predict_tab \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TabbedPanelItem\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'Predict'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 BoxLayout\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 orientation
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'vertical'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .predict_status \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Label\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Prediction Inputs"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 30\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .country_spinner \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Spinner\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Select Country"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 values
+\f0\i0 \cf8 \strokec8 =\cf4 \strokec4 [], 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .province_spinner \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Spinner\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Select Province"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 values
+\f0\i0 \cf8 \strokec8 =\cf4 \strokec4 [], 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .family_spinner \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Spinner\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Select Family"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 values
+\f0\i0 \cf8 \strokec8 =\cf4 \strokec4 [], 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .top_k_input \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TextInput\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "10"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 hint_text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Top K Results (1-50)"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 multiline
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 False\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .predict_btn \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Button\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Predict Genera"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 40\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 on_release
+\f0\i0 \cf8 \strokec8 =\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i x
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 make_prediction\cf4 \strokec4 ())\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .results_label \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 Label\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 "Prediction Results"\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 size_hint_y
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 height
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 30\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .results_textbox \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TextInput\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 readonly
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 True\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 multiline
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 True\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 font_size
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 14\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .predict_status)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .country_spinner)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .province_spinner)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .family_spinner)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .top_k_input)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .predict_btn)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .results_label)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         predict_layout.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .results_textbox)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .predict_tab.\cf7 \strokec7 add_widget\cf4 \strokec4 (predict_layout)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .tab_panel.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .predict_tab)\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4         
+\f1\i \cf13 \strokec13 # About Tab
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .about_tab \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 TabbedPanelItem\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'About'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         about_text \cf8 \strokec8 =\cf4 \strokec4  (\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\uc0\u55356 \u57156  MushroomTRACKR - Fungal Genus Predictor\cf7 \strokec7 \\n\\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "This application predicts fungal genera based on:\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Province/State location\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Temperature and humidity data\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Family classification\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Machine learning models\cf7 \strokec7 \\n\\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "Features:\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Random Forest classifier with 95\cf9 \strokec9 %+ a\cf10 \strokec10 ccuracy\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Province-based environmental data\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Interactive predictions with confidence bars\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Modern Kivy UI\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "\'95 Fuzzy search dropdowns\cf7 \strokec7 \\n\\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 "Version: 3.0 (Kivy Edition)"\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .about_tab.\cf7 \strokec7 add_widget\cf4 \strokec4 (\cf7 \strokec7 Label\cf4 \strokec4 (
+\f1\i \cf12 \strokec12 text
+\f0\i0 \cf8 \strokec8 =\cf4 \strokec4 about_text, 
+\f1\i \cf12 \strokec12 halign
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'left'\cf4 \strokec4 , 
+\f1\i \cf12 \strokec12 valign
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'top'\cf4 \strokec4 ))\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .tab_panel.\cf7 \strokec7 add_widget\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .about_tab)\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 update_status\cf4 \strokec4 (
+\f1\i self
+\f0\i0 , 
+\f1\i text
+\f0\i0 , 
+\f1\i progress
+\f0\i0 \cf2 \strokec2 =\cf9 \strokec9 0.0\cf4 \strokec4 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .status_text \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i text
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_status.text \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i text
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .data_progress.value \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i progress
+\f0\i0 \cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 load_data\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 try\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i \cf13 \strokec13 # Data loading and processing in background thread
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             script_dir \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 dirname\cf4 \strokec4 (\cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 abspath\cf4 \strokec4 (__file__))\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             filtered_path \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 join\cf4 \strokec4 (script_dir, \cf10 \strokec10 'filtered_biodiversity_data.csv'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             temp_file_path \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 join\cf4 \strokec4 (script_dir, \cf10 \strokec10 'temperature_2m.csv'\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             biodata \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 pd\cf4 \strokec4 .\cf7 \strokec7 read_csv\cf4 \strokec4 (filtered_path)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             tempdata \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 pd\cf4 \strokec4 .\cf7 \strokec7 read_csv\cf4 \strokec4 (temp_file_path)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             le_stateProvince \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             le_family \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             le_country \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             le_genus \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             biodata[\cf10 \strokec10 'stateProvince_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  le_stateProvince.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata[\cf10 \strokec10 'stateProvince_cleaned'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             biodata[\cf10 \strokec10 'family_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  le_family.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata[\cf10 \strokec10 'family_cleaned'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             biodata[\cf10 \strokec10 'country_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  le_country.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata[\cf10 \strokec10 'country'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             biodata[\cf10 \strokec10 'genus_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  le_genus.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata[\cf10 \strokec10 'genus'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             available_countries \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 sorted\cf4 \strokec4 (biodata[\cf10 \strokec10 'country'\cf4 \strokec4 ].\cf7 \strokec7 dropna\cf4 \strokec4 ().\cf7 \strokec7 unique\cf4 \strokec4 ().\cf7 \strokec7 astype\cf4 \strokec4 (\cf6 \strokec6 str\cf4 \strokec4 ))\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             available_provinces \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 sorted\cf4 \strokec4 (biodata[\cf10 \strokec10 'stateProvince_cleaned'\cf4 \strokec4 ].\cf7 \strokec7 dropna\cf4 \strokec4 ().\cf7 \strokec7 unique\cf4 \strokec4 ().\cf7 \strokec7 astype\cf4 \strokec4 (\cf6 \strokec6 str\cf4 \strokec4 ))\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             available_families \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 sorted\cf4 \strokec4 (biodata[\cf10 \strokec10 'family_cleaned'\cf4 \strokec4 ].\cf7 \strokec7 dropna\cf4 \strokec4 ().\cf7 \strokec7 unique\cf4 \strokec4 ().\cf7 \strokec7 astype\cf4 \strokec4 (\cf6 \strokec6 str\cf4 \strokec4 ))\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i \cf13 \strokec13 # Train model
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 train_model\cf4 \strokec4 (
+\f1\i biodata
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 top_n \cf8 \strokec8 =\cf4 \strokec4  \cf9 \strokec9 50\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 top_genera \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i biodata
+\f0\i0 [\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 value_counts\cf4 \strokec4 ().\cf7 \strokec7 nlargest\cf4 \strokec4 (top_n).index\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i biodata
+\f0\i0 [
+\f1\i biodata
+\f0\i0 [\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (top_genera)].\cf7 \strokec7 copy\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 le_genus \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top[\cf10 \strokec10 'genus_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  le_genus.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata_top[\cf10 \strokec10 'genus'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top[\cf10 \strokec10 'temp_squared'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 **\cf4 \strokec4  \cf9 \strokec9 2\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 global_mean_temp \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ].\cf7 \strokec7 mean\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top[\cf10 \strokec10 'temp_diff_mean'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 -\cf4 \strokec4  global_mean_temp\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top[\cf10 \strokec10 'temp_family_interaction'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 *\cf4 \strokec4  biodata_top[\cf10 \strokec10 'family_encoded'\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 biodata_top \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                     \cf2 \strokec2 ~\cf4 \strokec4 biodata_top[\cf10 \strokec10 'family_cleaned'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (non_macroscopic_basidiomycota_families) \cf2 \strokec2 &\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                     \cf2 \strokec2 ~\cf4 \strokec4 biodata_top[\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (non_macroscopic_basidiomycota_genera)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 \cf2 \strokec2 if\cf4 \strokec4  biodata_top.empty:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                     \cf2 \strokec2 raise\cf4 \strokec4  \cf6 \strokec6 ValueError\cf4 \strokec4 (\cf10 \strokec10 "No data left after filtering non-macroscopic Basidiomycota."\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 features \cf8 \strokec8 =\cf4 \strokec4  [\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                     \cf10 \strokec10 'stateProvince_encoded'\cf4 \strokec4 , \cf10 \strokec10 'family_encoded'\cf4 \strokec4 , \cf10 \strokec10 'country_encoded'\cf4 \strokec4 , \cf10 \strokec10 'temperature'\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                     \cf10 \strokec10 'temp_squared'\cf4 \strokec4 , \cf10 \strokec10 'temp_diff_mean'\cf4 \strokec4 , \cf10 \strokec10 'temp_family_interaction'\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 X \cf8 \strokec8 =\cf4 \strokec4  biodata_top[features].\cf7 \strokec7 fillna\cf4 \strokec4 (\cf2 \strokec2 -\cf9 \strokec9 1\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 y \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'genus_encoded'\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 scaler \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 StandardScaler\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 X_scaled \cf8 \strokec8 =\cf4 \strokec4  scaler.\cf7 \strokec7 fit_transform\cf4 \strokec4 (X)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 model \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 RandomForestClassifier\cf4 \strokec4 (
+\f1\i n_estimators
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 100\cf4 \strokec4 , 
+\f1\i class_weight
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'balanced'\cf4 \strokec4 , 
+\f1\i random_state
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 42\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 model.\cf7 \strokec7 fit\cf4 \strokec4 (X_scaled, y)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 y_pred \cf8 \strokec8 =\cf4 \strokec4  model.\cf7 \strokec7 predict\cf4 \strokec4 (X_scaled)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 accuracy_score\cf4 \strokec4 (y, y_pred)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 bal_acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 balanced_accuracy_score\cf4 \strokec4 (y, y_pred)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 \cf2 \strokec2 return\cf4 \strokec4  model, scaler, features, global_mean_temp, biodata_top, acc, bal_acc, le_genus\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             model, scaler, features, global_mean_temp, biodata_top, acc, bal_acc, le_genus \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 train_model\cf4 \strokec4 (biodata)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i \cf13 \strokec13 # Schedule UI update on main thread
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 update_ui\cf4 \strokec4 (
+\f1\i dt
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .biodata \cf8 \strokec8 =\cf4 \strokec4  biodata\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .tempdata \cf8 \strokec8 =\cf4 \strokec4  tempdata\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .le_stateProvince \cf8 \strokec8 =\cf4 \strokec4  le_stateProvince\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .le_family \cf8 \strokec8 =\cf4 \strokec4  le_family\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .le_country \cf8 \strokec8 =\cf4 \strokec4  le_country\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .le_genus \cf8 \strokec8 =\cf4 \strokec4  le_genus\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .available_countries \cf8 \strokec8 =\cf4 \strokec4  available_countries\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .available_provinces \cf8 \strokec8 =\cf4 \strokec4  available_provinces\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .available_families \cf8 \strokec8 =\cf4 \strokec4  available_families\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .country_spinner.values \cf8 \strokec8 =\cf4 \strokec4  available_countries\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .province_spinner.values \cf8 \strokec8 =\cf4 \strokec4  available_provinces\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .family_spinner.values \cf8 \strokec8 =\cf4 \strokec4  available_families\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .final_model \cf8 \strokec8 =\cf4 \strokec4  model\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .scaler \cf8 \strokec8 =\cf4 \strokec4  scaler\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .features \cf8 \strokec8 =\cf4 \strokec4  features\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .global_mean_temp \cf8 \strokec8 =\cf4 \strokec4  global_mean_temp\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .biodata_top \cf8 \strokec8 =\cf4 \strokec4  biodata_top\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .acc \cf8 \strokec8 =\cf4 \strokec4  acc\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .bal_acc \cf8 \strokec8 =\cf4 \strokec4  bal_acc\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf2 \strokec2 f\cf10 \strokec10 "Data loaded! Model Accuracy: \cf9 \strokec9 \{\cf4 \strokec4 acc\cf2 \strokec2 :.2%\cf9 \strokec9 \}\cf10 \strokec10 , Balanced Accuracy: \cf9 \strokec9 \{\cf4 \strokec4 bal_acc\cf2 \strokec2 :.2%\cf9 \strokec9 \}\cf10 \strokec10 "\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 refresh_data\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Loading filtered_data.csv..."\cf4 \strokec4 , \cf9 \strokec9 0.2\cf4 \strokec4 ), \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Loading temperature data..."\cf4 \strokec4 , \cf9 \strokec9 0.4\cf4 \strokec4 ), \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Processing filtered data..."\cf4 \strokec4 , \cf9 \strokec9 0.6\cf4 \strokec4 ), \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 : 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Training model from filtered data..."\cf4 \strokec4 , \cf9 \strokec9 0.8\cf4 \strokec4 ), \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf7 \strokec7 update_ui\cf4 \strokec4 , \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 except\cf4 \strokec4  \cf6 \strokec6 Exception\cf4 \strokec4  \cf2 \strokec2 as\cf4 \strokec4  error:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             Clock.\cf7 \strokec7 schedule_once\cf4 \strokec4 (\cf2 \strokec2 lambda\cf4 \strokec4  
+\f1\i dt
+\f0\i0 , 
+\f1\i err
+\f0\i0 \cf2 \strokec2 =\cf4 \strokec4 error: 
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf2 \strokec2 f\cf10 \strokec10 "Error: \cf9 \strokec9 \{\cf6 \strokec6 str\cf4 \strokec4 (
+\f1\i err
+\f0\i0 )\cf9 \strokec9 \}\cf10 \strokec10 "\cf4 \strokec4 , \cf9 \strokec9 0.0\cf4 \strokec4 ), \cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 refresh_data\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  
+\f1\i self
+\f0\i0 .biodata \cf2 \strokec2 is\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             data_text \cf8 \strokec8 =\cf4 \strokec4  \cf10 \strokec10 "\cf7 \strokec7 \\t\cf10 \strokec10 "\cf4 \strokec4 .\cf7 \strokec7 join\cf4 \strokec4 (
+\f1\i self
+\f0\i0 .biodata.columns) \cf2 \strokec2 +\cf4 \strokec4  \cf10 \strokec10 "\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 for\cf4 \strokec4  idx, row \cf2 \strokec2 in\cf4 \strokec4  
+\f1\i self
+\f0\i0 .biodata.\cf7 \strokec7 head\cf4 \strokec4 (\cf9 \strokec9 100\cf4 \strokec4 ).\cf7 \strokec7 iterrows\cf4 \strokec4 ():\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 data_text \cf8 \strokec8 +=\cf4 \strokec4  \cf10 \strokec10 "\cf7 \strokec7 \\t\cf10 \strokec10 "\cf4 \strokec4 .\cf7 \strokec7 join\cf4 \strokec4 ([\cf6 \strokec6 str\cf4 \strokec4 (x) \cf2 \strokec2 for\cf4 \strokec4  x \cf2 \strokec2 in\cf4 \strokec4  row]) \cf2 \strokec2 +\cf4 \strokec4  \cf10 \strokec10 "\cf7 \strokec7 \\n\cf10 \strokec10 "\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .data_textbox.text \cf8 \strokec8 =\cf4 \strokec4  data_text\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 export_data\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  
+\f1\i self
+\f0\i0 .biodata \cf2 \strokec2 is\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 from\cf4 \strokec4  kivy.utils \cf2 \strokec2 import\cf4 \strokec4  platform\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 if\cf4 \strokec4  platform \cf2 \strokec2 ==\cf4 \strokec4  \cf10 \strokec10 'win'\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 default_path \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 expanduser\cf4 \strokec4 (\cf10 \strokec10 "~/Desktop/filtered_data.csv"\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 else\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 default_path \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 os\cf4 \strokec4 .path.\cf7 \strokec7 expanduser\cf4 \strokec4 (\cf10 \strokec10 "~/filtered_data.csv"\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 with\cf4 \strokec4  \cf7 \strokec7 open\cf4 \strokec4 (default_path, \cf10 \strokec10 'w'\cf4 \strokec4 ) \cf2 \strokec2 as\cf4 \strokec4  f:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 
+\f1\i self
+\f0\i0 .biodata.\cf7 \strokec7 to_csv\cf4 \strokec4 (f, 
+\f1\i \cf12 \strokec12 index
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 False\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf2 \strokec2 f\cf10 \strokec10 "Exported to \cf9 \strokec9 \{\cf4 \strokec4 default_path\cf9 \strokec9 \}\cf10 \strokec10 "\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 make_prediction\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         province \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .province_spinner.text\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         country \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .country_spinner.text\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_k_str \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .top_k_input.text\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 try\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             top_k \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 int\cf4 \strokec4 (top_k_str)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 if\cf4 \strokec4  top_k \cf2 \strokec2 <\cf4 \strokec4  \cf9 \strokec9 1\cf4 \strokec4  \cf2 \strokec2 or\cf4 \strokec4  top_k \cf2 \strokec2 >\cf4 \strokec4  \cf9 \strokec9 50\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 \cf2 \strokec2 raise\cf4 \strokec4  \cf6 \strokec6 ValueError\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 except\cf4 \strokec4  \cf6 \strokec6 ValueError\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Top K must be an integer between 1 and 50."\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 return\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         family \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .family_spinner.text\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         family_list \cf8 \strokec8 =\cf4 \strokec4  [family] \cf2 \strokec2 if\cf4 \strokec4  family \cf2 \strokec2 else\cf4 \strokec4  \cf9 \strokec9 None\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  province \cf2 \strokec2 or\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  country:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Please select both country and province/state."\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 return\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         df_predictions \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .\cf7 \strokec7 predict_genera\cf4 \strokec4 (province, country, top_k, family_list)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .results_textbox.text \cf8 \strokec8 =\cf4 \strokec4  \cf10 \strokec10 ""\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  df_predictions \cf2 \strokec2 is\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4  \cf2 \strokec2 and\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  df_predictions.empty:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .results_label.text \cf8 \strokec8 =\cf4 \strokec4  \cf2 \strokec2 f\cf10 \strokec10 "Predicted genera for \cf9 \strokec9 \{\cf4 \strokec4 province\cf9 \strokec9 \}\cf10 \strokec10 , \cf9 \strokec9 \{\cf4 \strokec4 country\cf9 \strokec9 \}\cf10 \strokec10 ."\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             results_text \cf8 \strokec8 =\cf4 \strokec4  \cf10 \strokec10 "Genus\cf7 \strokec7 \\t\cf10 \strokec10 Probability\cf7 \strokec7 \\n\cf10 \strokec10 "\cf4 \strokec4  \cf2 \strokec2 +\cf4 \strokec4  \cf10 \strokec10 "\cf7 \strokec7 \\n\cf10 \strokec10 "\cf4 \strokec4 .\cf7 \strokec7 join\cf4 \strokec4 ([\cf2 \strokec2 f\cf10 \strokec10 "\cf9 \strokec9 \{\cf4 \strokec4 row[\cf10 \strokec10 'Genus'\cf4 \strokec4 ]\cf9 \strokec9 \}\cf7 \strokec7 \\t\cf9 \strokec9 \{\cf4 \strokec4 row[\cf10 \strokec10 'Probability'\cf4 \strokec4 ]\cf2 \strokec2 :.2%\cf9 \strokec9 \}\cf10 \strokec10 "\cf4 \strokec4  \cf2 \strokec2 for\cf4 \strokec4  idx, row \cf2 \strokec2 in\cf4 \strokec4  df_predictions.\cf7 \strokec7 iterrows\cf4 \strokec4 ()])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .results_textbox.text \cf8 \strokec8 =\cf4 \strokec4  results_text\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 else\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "No predictions available for the selected input."\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 train_model\cf4 \strokec4 (
+\f1\i self
+\f0\i0 , 
+\f1\i biodata
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_n \cf8 \strokec8 =\cf4 \strokec4  \cf9 \strokec9 50\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_genera \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i biodata
+\f0\i0 [\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 value_counts\cf4 \strokec4 ().\cf7 \strokec7 nlargest\cf4 \strokec4 (top_n).index\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i biodata
+\f0\i0 [
+\f1\i biodata
+\f0\i0 [\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (top_genera)].\cf7 \strokec7 copy\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         
+\f1\i self
+\f0\i0 .le_genus \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 LabelEncoder\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top[\cf10 \strokec10 'genus_encoded'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_genus.\cf7 \strokec7 fit_transform\cf4 \strokec4 (biodata_top[\cf10 \strokec10 'genus'\cf4 \strokec4 ])\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top[\cf10 \strokec10 'temp_squared'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 **\cf4 \strokec4  \cf9 \strokec9 2\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         global_mean_temp \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ].\cf7 \strokec7 mean\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top[\cf10 \strokec10 'temp_diff_mean'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 -\cf4 \strokec4  global_mean_temp\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top[\cf10 \strokec10 'temp_family_interaction'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'temperature'\cf4 \strokec4 ] \cf2 \strokec2 *\cf4 \strokec4  biodata_top[\cf10 \strokec10 'family_encoded'\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         biodata_top \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 ~\cf4 \strokec4 biodata_top[\cf10 \strokec10 'family_cleaned'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (non_macroscopic_basidiomycota_families) \cf2 \strokec2 &\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 ~\cf4 \strokec4 biodata_top[\cf10 \strokec10 'genus'\cf4 \strokec4 ].\cf7 \strokec7 isin\cf4 \strokec4 (non_macroscopic_basidiomycota_genera)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  biodata_top.empty:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 raise\cf4 \strokec4  \cf6 \strokec6 ValueError\cf4 \strokec4 (\cf10 \strokec10 "No data left after filtering non-macroscopic Basidiomycota."\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         features \cf8 \strokec8 =\cf4 \strokec4  [\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 'stateProvince_encoded'\cf4 \strokec4 , \cf10 \strokec10 'family_encoded'\cf4 \strokec4 , \cf10 \strokec10 'country_encoded'\cf4 \strokec4 , \cf10 \strokec10 'temperature'\cf4 \strokec4 ,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 'temp_squared'\cf4 \strokec4 , \cf10 \strokec10 'temp_diff_mean'\cf4 \strokec4 , \cf10 \strokec10 'temp_family_interaction'\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         X \cf8 \strokec8 =\cf4 \strokec4  biodata_top[features].\cf7 \strokec7 fillna\cf4 \strokec4 (\cf2 \strokec2 -\cf9 \strokec9 1\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         y \cf8 \strokec8 =\cf4 \strokec4  biodata_top[\cf10 \strokec10 'genus_encoded'\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         scaler \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 StandardScaler\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         X_scaled \cf8 \strokec8 =\cf4 \strokec4  scaler.\cf7 \strokec7 fit_transform\cf4 \strokec4 (X)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         model \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 RandomForestClassifier\cf4 \strokec4 (
+\f1\i n_estimators
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 100\cf4 \strokec4 , 
+\f1\i class_weight
+\f0\i0 \cf8 \strokec8 =\cf10 \strokec10 'balanced'\cf4 \strokec4 , 
+\f1\i random_state
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 42\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         model.\cf7 \strokec7 fit\cf4 \strokec4 (X_scaled, y)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         y_pred \cf8 \strokec8 =\cf4 \strokec4  model.\cf7 \strokec7 predict\cf4 \strokec4 (X_scaled)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 accuracy_score\cf4 \strokec4 (y, y_pred)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         bal_acc \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 balanced_accuracy_score\cf4 \strokec4 (y, y_pred)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 return\cf4 \strokec4  model, scaler, features, global_mean_temp, biodata_top, acc, bal_acc\cf5 \cb1 \strokec5 \
+\
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 predict_genera\cf4 \strokec4 (
+\f1\i self
+\f0\i0 , 
+\f1\i province_name
+\f0\i0 , 
+\f1\i country_name
+\f0\i0 \cf2 \strokec2 =\cf9 \strokec9 None\cf4 \strokec4 , 
+\f1\i top_k
+\f0\i0 \cf2 \strokec2 =\cf9 \strokec9 10\cf4 \strokec4 , 
+\f1\i family_names
+\f0\i0 \cf2 \strokec2 =\cf9 \strokec9 None\cf4 \strokec4 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_stateProvince \cf2 \strokec2 is\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4  \cf2 \strokec2 and\cf4 \strokec4  
+\f1\i province_name
+\f0\i0  \cf2 \strokec2 in\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_stateProvince.classes_:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             province_encoded \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_stateProvince.\cf7 \strokec7 transform\cf4 \strokec4 ([
+\f1\i province_name
+\f0\i0 ])[\cf9 \strokec9 0\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 else\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Province not recognized."\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 return\cf4 \strokec4  \cf9 \strokec9 None\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  
+\f1\i country_name
+\f0\i0 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             country_encoded \cf8 \strokec8 =\cf4 \strokec4  \cf2 \strokec2 -\cf9 \strokec9 1\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 elif\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_country \cf2 \strokec2 is\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4  \cf2 \strokec2 and\cf4 \strokec4  
+\f1\i country_name
+\f0\i0  \cf2 \strokec2 in\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_country.classes_:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             country_encoded \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_country.\cf7 \strokec7 transform\cf4 \strokec4 ([
+\f1\i country_name
+\f0\i0 ])[\cf9 \strokec9 0\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 else\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .\cf7 \strokec7 update_status\cf4 \strokec4 (\cf10 \strokec10 "Country not recognized."\cf4 \strokec4 , \cf9 \strokec9 1.0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 return\cf4 \strokec4  \cf9 \strokec9 None\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 get_temp_for_province\cf4 \strokec4 (
+\f1\i province
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 if\cf4 \strokec4  
+\f1\i province
+\f0\i0  \cf2 \strokec2 not\cf4 \strokec4  \cf2 \strokec2 in\cf4 \strokec4  province_coordinates:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .nan\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             lat, lon \cf8 \strokec8 =\cf4 \strokec4  province_coordinates[
+\f1\i province
+\f0\i0 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i self
+\f0\i0 .tempdata[\cf10 \strokec10 'dist'\cf4 \strokec4 ] \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 sqrt\cf4 \strokec4 ((
+\f1\i self
+\f0\i0 .tempdata[\cf10 \strokec10 'latitude'\cf4 \strokec4 ] \cf2 \strokec2 -\cf4 \strokec4  lat)\cf2 \strokec2 **\cf9 \strokec9 2\cf4 \strokec4  \cf2 \strokec2 +\cf4 \strokec4  (
+\f1\i self
+\f0\i0 .tempdata[\cf10 \strokec10 'longitude'\cf4 \strokec4 ] \cf2 \strokec2 -\cf4 \strokec4  lon)\cf2 \strokec2 **\cf9 \strokec9 2\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             nearest \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .tempdata.loc[
+\f1\i self
+\f0\i0 .tempdata[\cf10 \strokec10 'dist'\cf4 \strokec4 ].\cf7 \strokec7 idxmin\cf4 \strokec4 ()]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             temp_val \cf8 \strokec8 =\cf4 \strokec4  nearest[\cf10 \strokec10 'temperature_C'\cf4 \strokec4 ] \cf2 \strokec2 if\cf4 \strokec4  \cf10 \strokec10 'temperature_C'\cf4 \strokec4  \cf2 \strokec2 in\cf4 \strokec4  nearest \cf2 \strokec2 else\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .nan\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 return\cf4 \strokec4  temp_val\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         temp \cf8 \strokec8 =\cf4 \strokec4  \cf7 \strokec7 get_temp_for_province\cf4 \strokec4 (
+\f1\i province_name
+\f0\i0 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         temp_squared \cf8 \strokec8 =\cf4 \strokec4  temp \cf2 \strokec2 **\cf4 \strokec4  \cf9 \strokec9 2\cf4 \strokec4  \cf2 \strokec2 if\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 isnan\cf4 \strokec4 (temp) \cf2 \strokec2 else\cf4 \strokec4  \cf2 \strokec2 -\cf9 \strokec9 1\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         temp_diff_mean \cf8 \strokec8 =\cf4 \strokec4  temp \cf2 \strokec2 -\cf4 \strokec4  
+\f1\i self
+\f0\i0 .global_mean_temp \cf2 \strokec2 if\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 isnan\cf4 \strokec4 (temp) \cf2 \strokec2 else\cf4 \strokec4  \cf2 \strokec2 -\cf9 \strokec9 1\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 if\cf4 \strokec4  
+\f1\i family_names
+\f0\i0  \cf2 \strokec2 is\cf4 \strokec4  \cf9 \strokec9 None\cf4 \strokec4  \cf2 \strokec2 or\cf4 \strokec4  \cf7 \strokec7 len\cf4 \strokec4 (
+\f1\i family_names
+\f0\i0 ) \cf2 \strokec2 ==\cf4 \strokec4  \cf9 \strokec9 0\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             
+\f1\i family_names
+\f0\i0  \cf8 \strokec8 =\cf4 \strokec4  [\cf10 \strokec10 'Unknown'\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         family_encs \cf8 \strokec8 =\cf4 \strokec4  []\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 for\cf4 \strokec4  fam \cf2 \strokec2 in\cf4 \strokec4  
+\f1\i family_names
+\f0\i0 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 if\cf4 \strokec4  fam \cf2 \strokec2 in\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_family.classes_:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 family_enc \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_family.\cf7 \strokec7 transform\cf4 \strokec4 ([fam])[\cf9 \strokec9 0\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf2 \strokec2 else\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 family_enc \cf8 \strokec8 =\cf4 \strokec4  \cf2 \strokec2 -\cf9 \strokec9 1\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             family_encs.\cf7 \strokec7 append\cf4 \strokec4 (family_enc)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         probas \cf8 \strokec8 =\cf4 \strokec4  []\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 for\cf4 \strokec4  family_encoded \cf2 \strokec2 in\cf4 \strokec4  family_encs:\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             temp_family_interaction \cf8 \strokec8 =\cf4 \strokec4  temp \cf2 \strokec2 *\cf4 \strokec4  family_encoded \cf2 \strokec2 if\cf4 \strokec4  \cf2 \strokec2 not\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 isnan\cf4 \strokec4 (temp) \cf2 \strokec2 else\cf4 \strokec4  \cf2 \strokec2 -\cf9 \strokec9 1\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             input_df \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 pd\cf4 \strokec4 .\cf6 \strokec6 DataFrame\cf4 \strokec4 ([[\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 province_encoded, family_encoded, country_encoded, temp,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4                 temp_squared, temp_diff_mean, temp_family_interaction,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             ]], 
+\f1\i \cf12 \strokec12 columns
+\f0\i0 \cf8 \strokec8 =
+\f1\i \cf4 \strokec4 self
+\f0\i0 .features)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             input_scaled \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .scaler.\cf7 \strokec7 transform\cf4 \strokec4 (input_df)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             proba \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .final_model.\cf7 \strokec7 predict_proba\cf4 \strokec4 (input_scaled)[\cf9 \strokec9 0\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             probas.\cf7 \strokec7 append\cf4 \strokec4 (proba)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         avg_proba \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 mean\cf4 \strokec4 (probas, 
+\f1\i \cf12 \strokec12 axis
+\f0\i0 \cf8 \strokec8 =\cf9 \strokec9 0\cf4 \strokec4 )\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_indices \cf8 \strokec8 =\cf4 \strokec4  \cf6 \strokec6 np\cf4 \strokec4 .\cf7 \strokec7 argsort\cf4 \strokec4 (avg_proba)[\cf2 \strokec2 -
+\f1\i \cf4 \strokec4 top_k
+\f0\i0 :][::\cf2 \strokec2 -\cf9 \strokec9 1\cf4 \strokec4 ]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_proba \cf8 \strokec8 =\cf4 \strokec4  avg_proba[top_indices]\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         top_genera_pred \cf8 \strokec8 =\cf4 \strokec4  
+\f1\i self
+\f0\i0 .le_genus.\cf7 \strokec7 inverse_transform\cf4 \strokec4 (top_indices)\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 pd\cf4 \strokec4 .\cf6 \strokec6 DataFrame\cf4 \strokec4 (\{\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 'Genus'\cf4 \strokec4 : top_genera_pred,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 'Probability'\cf4 \strokec4 : top_proba,\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4             \cf10 \strokec10 'InputProvince'\cf4 \strokec4 : 
+\f1\i province_name
+\f0\i0 \cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \})\cf5 \cb1 \strokec5 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 class\cf4 \strokec4  \cf6 \strokec6 MushroomTRACKRApp\cf4 \strokec4 (\cf11 \strokec11 App\cf4 \strokec4 ):\cf5 \cb1 \strokec5 \
+\pard\pardeftab720\partightenfactor0
+\cf4 \cb3 \strokec4     \cf2 \strokec2 def\cf4 \strokec4  \cf7 \strokec7 build\cf4 \strokec4 (
+\f1\i self
+\f0\i0 ):\cf5 \cb1 \strokec5 \
+\cf4 \cb3 \strokec4         \cf2 \strokec2 return\cf4 \strokec4  \cf6 \strokec6 MushroomTRACKRRoot\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 \strokec2 if\cf4 \strokec4  __name__ \cf2 \strokec2 ==\cf4 \strokec4  \cf10 \strokec10 '__main__'\cf4 \strokec4 :\cf5 \cb1 \strokec5 \
+\pard\pardeftab720\partightenfactor0
+\cf4 \cb3 \strokec4     \cf6 \strokec6 MushroomTRACKRApp\cf4 \strokec4 ().\cf7 \strokec7 run\cf4 \strokec4 ()\cf5 \cb1 \strokec5 \
+}
