@@ -10,10 +10,10 @@ temperature data from "ERA5 hourly data on single levels from 1940 to present" a
 This app runs on MacOs and uses purely Python programming
 
 # Python libraries-
-kivy
-pandas
-numpy 
-os
-threading
-rapidfuzz
-sklearn
+kivy  
+pandas  
+numpy  
+os  
+threading  
+rapidfuzz  
+sklearn  
